@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\DashboardController;
 
 /*
@@ -14,6 +15,5 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
-Route::get('/', [DashboardController::class, 'index']);
-Route::get('/create', [DashboardController::class, 'create'])->name('create');
-Route::post('/store', [DashboardController::class, 'store'])->name('store');
+Route::get('/', [DashboardController::class, 'dashboard']);
+Route::resource('visitor', VisitorController::class);

@@ -51,10 +51,28 @@
                     <i class="bi bi-grid-fill"></i><span>Dashboard</span>
                 </a>
             </li>
+            <!-- Kelola Data -->
             <li class="nav-item">
-                <a class="nav-link {{ request()->is('create') ? '' : 'collapsed' }}" href="{{ route('create') }}">
-                    <i class="bi bi-plus"></i><span>Tambah Data</span>
+                <a class="nav-link {{ request()->routeIs('visitor.*') ? '' : 'collapsed' }}" data-bs-target="#data-nav"
+                    data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-folder-plus"></i><span>Kelola Data</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
+                <ul id="data-nav" class="nav-content collapse {{ request()->routeIs('visitor.*') ? 'show' : '' }}"
+                    data-bs-parent="#sidebar-nav">
+
+                    <li>
+                        <a href="{{ route('visitor.index') }}"
+                            class="{{ request()->routeIs('visitor.index') ? 'active' : '' }}">
+                            <i class="bi bi-circle"></i><span>Daftar Data</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('visitor.create') }}"
+                            class="{{ request()->routeIs('visitor.create') ? 'active' : '' }}">
+                            <i class="bi bi-circle"></i><span>Tambah Data</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </aside>
