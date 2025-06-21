@@ -47,9 +47,13 @@
 
             <!-- Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="">
-                    <i class="bi bi-grid-fill"></i>
-                    <span>Dashboard</span>
+                <a class="nav-link {{ request()->is('/') ? '' : 'collapsed' }}" href="{{ url('/') }}">
+                    <i class="bi bi-grid-fill"></i><span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->is('create') ? '' : 'collapsed' }}" href="{{ route('create') }}">
+                    <i class="bi bi-plus"></i><span>Tambah Data</span>
                 </a>
             </li>
         </ul>
@@ -79,7 +83,8 @@
     <!-- Vendor JS Files -->
     <script src="{{ asset('vendor/apexcharts/apexcharts.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('vendor/chart.js/chart.umd.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {{-- <script src="{{ asset('vendor/chart.js/chart.umd.js') }}"></script> --}}
     <script src="{{ asset('vendor/echarts/echarts.min.js') }}"></script>
     <script src="{{ asset('vendor/quill/quill.min.js') }}"></script>
     <script src="{{ asset('vendor/simple-datatables/simple-datatables.js') }}"></script>
@@ -87,163 +92,7 @@
     <script src="{{ asset('vendor/php-email-form/validate.js') }}"></script>
     <!-- Template Main JS File -->
     <script src="{{ asset('js/main.js') }}"></script>
-    <script>
-        const softColors = ['#A3C9A8', '#FFB6B9', '#FFDAC1', '#E2F0CB', '#B5EAD7', '#C7CEEA', '#D5AAFF', '#A0CED9'];
-
-        const weeklyData = {!! json_encode($weeklyChartData) !!};
-        const weeklyLabels = {!! json_encode($weeklyLabels) !!};
-        const monthlyData = {!! json_encode($monthlyChartData) !!};
-        const monthlyLabels = {!! json_encode($monthlyLabels) !!};
-
-        const noteLabels = {!! json_encode($noteSummary->pluck('notes')) !!};
-        const noteData = {!! json_encode($noteSummary->pluck('total')) !!};
-
-        const noteColorMap = {
-            "Berawan": "#A3C9A8",
-            "Cuaca cerah": "#FFB6B9",
-            "Hari biasa": "#FFDAC1",
-            "Libur nasional": "#E2F0CB"
-        };
-
-        const noteColors = noteLabels.map(label => noteColorMap[label] || '#CCCCCC');
-
-        const weeklyChart = new Chart(document.getElementById('weeklyChart'), {
-            type: 'line',
-            data: {
-                labels: weeklyLabels,
-                datasets: [{
-                    label: 'Pengunjung Mingguan',
-                    data: weeklyData,
-                    borderColor: softColors[0],
-                    backgroundColor: softColors[0],
-                    fill: true,
-                    tension: 0.4
-                }]
-            }
-        });
-
-        const monthlyChart = new Chart(document.getElementById('monthlyChart'), {
-            type: 'bar',
-            data: {
-                labels: monthlyLabels,
-                datasets: [{
-                    label: 'Pengunjung Bulanan',
-                    data: monthlyData,
-                    backgroundColor: softColors[1]
-                }]
-            }
-        });
-
-        const pieChart = new Chart(document.getElementById('pieChart'), {
-            type: 'pie',
-            data: {
-                labels: ['Mingguan', 'Bulanan'],
-                datasets: [{
-                    data: [{{ $pieData['weekly'] }}, {{ $pieData['monthly'] }}],
-                    backgroundColor: [softColors[2], softColors[3]]
-                }]
-            }
-        });
-
-        const noteChart = new Chart(document.getElementById('noteChart'), {
-            type: 'pie',
-            data: {
-                labels: noteLabels,
-                datasets: [{
-                    data: noteData,
-                    backgroundColor: noteColors
-                }]
-            }
-        });
-
-        document.getElementById('weeklyFilter').addEventListener('change', function() {
-            const filter = this.value;
-            const now = new Date();
-            const filteredData = [];
-            const filteredLabels = [];
-
-            weeklyLabels.forEach((label, index) => {
-                let labelDate = new Date(label + ' 2024');
-                let diffDays = (now - labelDate) / (1000 * 3600 * 24);
-                if ((filter === '6m' && diffDays <= 183) || (filter === '1y' && diffDays <= 365) ||
-                    filter === 'all') {
-                    filteredData.push(weeklyData[index]);
-                    filteredLabels.push(label);
-                }
-            });
-
-            weeklyChart.data.labels = filter === 'all' ? weeklyLabels : filteredLabels;
-            weeklyChart.data.datasets[0].data = filter === 'all' ? weeklyData : filteredData;
-            weeklyChart.update();
-        });
-
-        document.getElementById('monthlyFilter').addEventListener('change', function() {
-            const filter = this.value;
-            const now = new Date();
-            const filteredData = [];
-            const filteredLabels = [];
-
-            monthlyLabels.forEach((label, index) => {
-                let labelDate = new Date('01 ' + label);
-                let diffDays = (now - labelDate) / (1000 * 3600 * 24);
-                if ((filter === '1y' && diffDays <= 365) || filter === 'all') {
-                    filteredData.push(monthlyData[index]);
-                    filteredLabels.push(label);
-                }
-            });
-
-            monthlyChart.data.labels = filter === 'all' ? monthlyLabels : filteredLabels;
-            monthlyChart.data.datasets[0].data = filter === 'all' ? monthlyData : filteredData;
-            monthlyChart.update();
-        });
-
-        document.getElementById('pieFilter').addEventListener('change', function() {
-            const filter = this.value;
-            const pieDataMap = {
-                weekly: {{ $pieData['weekly'] }},
-                monthly: {{ $pieData['monthly'] }},
-            };
-
-            let filteredData = [];
-            let filteredLabels = [];
-
-            if (filter === 'weekly') {
-                filteredData = [pieDataMap.weekly];
-                filteredLabels = ['Mingguan'];
-            } else if (filter === 'monthly') {
-                filteredData = [pieDataMap.monthly];
-                filteredLabels = ['Bulanan'];
-            } else {
-                filteredData = [pieDataMap.weekly, pieDataMap.monthly];
-                filteredLabels = ['Mingguan', 'Bulanan'];
-            }
-
-            pieChart.data.labels = filteredLabels;
-            pieChart.data.datasets[0].data = filteredData;
-            pieChart.update();
-        });
-
-        document.getElementById('noteFilter').addEventListener('change', function() {
-            const filter = this.value;
-
-            let filteredLabels = [];
-            let filteredData = [];
-            let filteredColors = [];
-
-            noteLabels.forEach((label, index) => {
-                if (filter === 'all' || label === filter) {
-                    filteredLabels.push(label);
-                    filteredData.push(noteData[index]);
-                    filteredColors.push(noteColorMap[label] || '#CCCCCC');
-                }
-            });
-
-            noteChart.data.labels = filteredLabels;
-            noteChart.data.datasets[0].data = filteredData;
-            noteChart.data.datasets[0].backgroundColor = filteredColors;
-            noteChart.update();
-        });
-    </script>
+    @stack('scripts')
 </body>
 
 </html>

@@ -15,3 +15,5 @@ use App\Http\Controllers\DashboardController;
 */
 
 Route::get('/', [DashboardController::class, 'index']);
+Route::get('/create', [DashboardController::class, 'create'])->name('create');
+Route::post('/store', [DashboardController::class, 'store'])->name('store');
