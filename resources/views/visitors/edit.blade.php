@@ -11,7 +11,7 @@
                     <a href="{{ url('/') }}">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ url('visitor') }}">Daftar Pengunjung</a>
+                    <a href="{{ url('visitors') }}">Daftar Pengunjung</a>
                 </li>
                 <li class="breadcrumb-item active">Edit Data</li>
             </ol>
@@ -37,7 +37,7 @@
                     <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
 
-                <form action="{{ route('visitor.update', $visitor->id) }}" method="POST">
+                <form action="{{ route('visitors.update', $visitor->id) }}" method="POST">
                     @csrf
                     @method('PUT')
 
@@ -77,7 +77,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">Perbarui</button>
-                    <a href="{{ url('visitor.index') }}" class="btn btn-secondary">Kembali</a>
+                    <a href="{{ route('visitors.store') }}" class="btn btn-secondary">Kembali</a>
                 </form>
             </div>
         </div>

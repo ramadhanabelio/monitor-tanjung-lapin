@@ -29,7 +29,7 @@
                                         <h6>Action</h6>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('visitor.create') }}"><i
+                                        <a class="dropdown-item" href="{{ route('visitors.create') }}"><i
                                                 class="bi bi-plus"></i> Tambah Data</a>
                                     </li>
                                 </ul>
@@ -71,11 +71,11 @@
                                                 <td>{{ $visitor->count }}</td>
                                                 <td>{{ $visitor->notes ?? '-' }}</td>
                                                 <td>
-                                                    <a href="{{ route('visitor.edit', $visitor->id) }}"
+                                                    <a href="{{ route('visitors.edit', $visitor->id) }}"
                                                         class="badge bg-warning text-dark">
                                                         <i class="bi bi-pencil-square"></i> Edit
                                                     </a>
-                                                    <form action="{{ route('visitor.destroy', $visitor->id) }}"
+                                                    <form action="{{ route('visitors.destroy', $visitor->id) }}"
                                                         method="POST" class="d-inline"
                                                         onsubmit="return confirm('Yakin ingin menghapus data ini?');">
                                                         @csrf

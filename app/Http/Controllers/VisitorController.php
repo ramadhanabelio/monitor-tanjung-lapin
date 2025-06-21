@@ -35,7 +35,7 @@ class VisitorController extends Controller
             'notes' => $request->notes,
         ]);
 
-        return redirect()->route('visitor.index')->with('success', 'Data berhasil ditambahkan!');
+        return redirect()->route('visitors.index')->with('success', 'Data berhasil ditambahkan!');
     }
 
     public function edit($id)
@@ -61,7 +61,7 @@ class VisitorController extends Controller
             'notes' => $request->notes,
         ]);
 
-        return redirect()->route('visitor.index')->with('success', 'Data berhasil diperbarui!');
+        return redirect()->route('visitors.index')->with('success', 'Data berhasil diperbarui!');
     }
 
     public function destroy($id)
@@ -69,6 +69,6 @@ class VisitorController extends Controller
         $visitor = Visitor::findOrFail($id);
         $visitor->delete();
 
-        return redirect()->route('visitor.index')->with('success', 'Data berhasil dihapus!');
+        return redirect()->route('visitors.index')->with('success', 'Data berhasil dihapus!');
     }
 }

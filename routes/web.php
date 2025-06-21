@@ -16,4 +16,4 @@ use App\Http\Controllers\DashboardController;
 */
 
 Route::get('/', [DashboardController::class, 'dashboard']);
-Route::resource('visitor', VisitorController::class);
+Route::resource('visitors', VisitorController::class);
