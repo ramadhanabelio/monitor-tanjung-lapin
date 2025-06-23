@@ -68,10 +68,10 @@ DB_DATABASE=monitor_tanjung_lapin
 php artisan key:generate
 ```
 
-**8.** Create and migrate database (in this case, we use migrate:fresh to delete and repopulate database data):
+**8.** Create and migrate database:
 
 ```bash
-php artisan migrate:fresh --seed
+php artisan migrate
 ```
 
 **9.** Run the Laravel development server:
