@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('visitors', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->enum('period', ['weekly', 'monthly'])->default('weekly');
             $table->unsignedInteger('count');
             $table->text('notes')->nullable();

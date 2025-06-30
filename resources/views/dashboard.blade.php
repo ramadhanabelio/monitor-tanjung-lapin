@@ -92,7 +92,7 @@
                                     <ul class="list-group list-group-flush">
                                         @foreach ($topMonths as $month)
                                             <li class="list-group-item">
-                                                {{ \Carbon\Carbon::parse($month->visit_date)->format('F Y') }}:
+                                                {{ \Carbon\Carbon::parse($month->visit_date)->translatedFormat('F Y') }}:
                                                 {{ $month->count }}
                                                 pengunjung
                                             </li>

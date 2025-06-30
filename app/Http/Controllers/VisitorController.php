@@ -10,8 +10,10 @@ class VisitorController extends Controller
 {
     public function index()
     {
-        $visitors = Visitor::orderBy('date', 'desc')->get();
-        return view('visitors.index', compact('visitors'));
+        $weeklyVisitors = Visitor::where('period', 'weekly')->orderBy('start_date')->get();
+        $monthlyVisitors = Visitor::where('period', 'monthly')->orderBy('start_date')->get();
+
+        return view('visitors.index', compact('weeklyVisitors', 'monthlyVisitors'));
     }
 
     public function create()
@@ -22,14 +24,16 @@ class VisitorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'date' => 'required|date',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
             'period' => 'required|in:weekly,monthly',
             'count' => 'required|integer|min:0',
             'notes' => 'nullable|string',
         ]);
 
         Visitor::create([
-            'date' => $request->date,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
             'period' => $request->period,
             'count' => $request->count,
             'notes' => $request->notes,
@@ -47,7 +51,8 @@ class VisitorController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'date' => 'required|date',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
             'period' => 'required|in:weekly,monthly',
             'count' => 'required|integer|min:0',
             'notes' => 'nullable|string',
@@ -55,7 +60,8 @@ class VisitorController extends Controller
 
         $visitor = Visitor::findOrFail($id);
         $visitor->update([
-            'date' => $request->date,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
             'period' => $request->period,
             'count' => $request->count,
             'notes' => $request->notes,

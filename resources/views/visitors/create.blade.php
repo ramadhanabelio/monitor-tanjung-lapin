@@ -41,8 +41,13 @@
                     @csrf
 
                     <div class="mb-3">
-                        <label for="date" class="form-label">Tanggal</label>
-                        <input type="date" id="date" name="date" class="form-control" required>
+                        <label for="start_date" class="form-label">Tanggal Mulai</label>
+                        <input type="date" id="start_date" name="start_date" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="end_date" class="form-label">Tanggal Berakhir</label>
+                        <input type="date" id="end_date" name="end_date" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
@@ -59,16 +64,16 @@
                         <input type="number" id="count" name="count" class="form-control" min="0" required>
                     </div>
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="notes" class="form-label">Catatan</label>
                         <select id="notes" name="notes" class="form-select">
-                            <option value="" disabled selected>Pilih catatan</option>
+                            <option value="" disabled selected>Pilih catatan (opsional)</option>
                             <option value="Berawan">Berawan</option>
                             <option value="Cuaca cerah">Cuaca cerah</option>
                             <option value="Hari biasa">Hari biasa</option>
                             <option value="Libur nasional">Libur nasional</option>
                         </select>
-                    </div>
+                    </div> --}}
 
                     <button type="submit" class="btn btn-primary">Simpan</button>
                     <a href="{{ route('visitors.index') }}" class="btn btn-secondary">Kembali</a>

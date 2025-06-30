@@ -42,9 +42,15 @@
                     @method('PUT')
 
                     <div class="mb-3">
-                        <label for="date" class="form-label">Tanggal</label>
-                        <input type="date" id="date" name="date" class="form-control"
-                            value="{{ $visitor->date }}" required>
+                        <label for="start_date" class="form-label">Tanggal Mulai</label>
+                        <input type="date" id="start_date" name="start_date" class="form-control"
+                            value="{{ $visitor->start_date }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="end_date" class="form-label">Tanggal Berakhir</label>
+                        <input type="date" id="end_date" name="end_date" class="form-control"
+                            value="{{ $visitor->end_date }}" required>
                     </div>
 
                     <div class="mb-3">
@@ -61,23 +67,19 @@
                             value="{{ $visitor->count }}" required>
                     </div>
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="notes" class="form-label">Catatan</label>
                         <select id="notes" name="notes" class="form-select">
                             <option value="" {{ $visitor->notes == null ? 'selected' : '' }}>Tidak Ada</option>
                             <option value="Berawan" {{ $visitor->notes == 'Berawan' ? 'selected' : '' }}>Berawan</option>
-                            <option value="Cuaca cerah" {{ $visitor->notes == 'Cuaca cerah' ? 'selected' : '' }}>Cuaca
-                                cerah
-                            </option>
-                            <option value="Hari biasa" {{ $visitor->notes == 'Hari biasa' ? 'selected' : '' }}>Hari biasa
-                            </option>
-                            <option value="Libur nasional" {{ $visitor->notes == 'Libur nasional' ? 'selected' : '' }}>
-                                Libur nasional</option>
+                            <option value="Cuaca cerah" {{ $visitor->notes == 'Cuaca cerah' ? 'selected' : '' }}>Cuaca cerah</option>
+                            <option value="Hari biasa" {{ $visitor->notes == 'Hari biasa' ? 'selected' : '' }}>Hari biasa</option>
+                            <option value="Libur nasional" {{ $visitor->notes == 'Libur nasional' ? 'selected' : '' }}>Libur nasional</option>
                         </select>
-                    </div>
+                    </div> --}}
 
                     <button type="submit" class="btn btn-primary">Perbarui</button>
-                    <a href="{{ route('visitors.store') }}" class="btn btn-secondary">Kembali</a>
+                    <a href="{{ route('visitors.index') }}" class="btn btn-secondary">Kembali</a>
                 </form>
             </div>
         </div>

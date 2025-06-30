@@ -10,7 +10,8 @@ class Visitor extends Model
     use HasFactory;
 
     protected $fillable = [
-        'date',
+        'start_date',
+        'end_date',
         'period',
         'count',
         'notes'
